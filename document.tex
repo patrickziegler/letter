@@ -1,0 +1,20 @@
+\documentclass[a4paper, 11pt]{scrlttr2}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{setspace}
+\usepackage{roboto}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\setkomavar{fromname}{John Doe}
+\setkomavar{fromaddress}{Example Str. 1 \\ 12345 City}
+\setkomavar{fromphone}{+49 123 123 456}
+\setkomavar{fromemail}{mail@test.com}
+
+\KOMAoptions{fromalign=right, fromphone=true, fromemail=true, backaddress=true, parskip=half, foldmarks=true}
+
+\begin{document}
+\pagestyle{empty}
+\input{content/letter}
+\end{document}
