@@ -12,8 +12,7 @@ PDFLATEX := docker run -it --rm -v $(PWD):/tmp/work $(DOCKER_IMAGE)
 OUTDIR ?= build
 OUTFILE ?= $(OUTDIR)/document.pdf
 
-view: $(OUTFILE)
-	@echo "Done"
+view: pdf
 	okular $(OUTFILE)
 
 pdf: $(OUTFILE)
