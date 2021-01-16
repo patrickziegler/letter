@@ -16,7 +16,7 @@ view: $(OUTFILE)
 	@echo "Done"
 	okular $(OUTFILE)
 
-all: $(OUTFILE)
+pdf: $(OUTFILE)
 	@echo "Done"
 
 clean:
