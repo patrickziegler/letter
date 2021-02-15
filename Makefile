@@ -10,12 +10,14 @@ DOCKER_GROUP_ID := $(shell id -g $(DOCKER_USER_NAME))
 PDFLATEX := docker run -it --rm -v $(PWD):/tmp/work $(DOCKER_IMAGE)
 
 OUTDIR ?= build
-OUTFILE ?= $(OUTDIR)/document.pdf
+OUTJOB ?= $(shell basename `pwd`)
+OUTFILE := $(OUTDIR)/$(OUTJOB).pdf
 
-view: pdf
+view: $(OUTFILE)
+	@echo "Done"
 	okular $(OUTFILE)
 
-pdf: $(OUTFILE)
+all: $(OUTFILE)
 	@echo "Done"
 
 clean:
@@ -32,5 +34,5 @@ $(OUTDIR):
 	mkdir -p $(OUTDIR)
 
 $(OUTFILE): $(SRC) $(OUTDIR) container
-	$(PDFLATEX) -output-directory $(OUTDIR) document.tex
-	$(PDFLATEX) -output-directory $(OUTDIR) document.tex
+	$(PDFLATEX) -output-directory $(OUTDIR) -jobname=$(OUTJOB) document.tex
+	$(PDFLATEX) -output-directory $(OUTDIR) -jobname=$(OUTJOB) document.tex
