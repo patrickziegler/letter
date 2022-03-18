@@ -15,7 +15,7 @@ OUTFILE := $(OUTDIR)/$(OUTJOB).pdf
 
 view: $(OUTFILE)
 	@echo "Done"
-	okular $(OUTFILE)
+	xdg-open $(OUTFILE)
 
 all: $(OUTFILE)
 	@echo "Done"
