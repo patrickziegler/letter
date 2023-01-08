@@ -2,12 +2,16 @@ SRC := \
 	document.tex \
 	content/letter.tex
 
-DOCKER_IMAGE ?= docker-pdflatex
-DOCKER_USER_NAME := $(shell whoami)
-DOCKER_USER_ID := $(shell id -u $(DOCKER_USER_NAME))
-DOCKER_GROUP_ID := $(shell id -g $(DOCKER_USER_NAME))
+CONT_IMAGE ?= pdflatex-dist
+CONT_USER_NAME := $(shell id -nu)
+CONT_USER_ID := $(shell id -u $(CONT_USER_NAME))
+CONT_GROUP_ID := $(shell id -g $(CONT_USER_NAME))
 
-PDFLATEX := docker run -it --rm -v $(PWD):/tmp/work $(DOCKER_IMAGE)
+ifeq "$(shell which podman)" ""
+	PDFLATEX := docker run -it --rm -v $(PWD):/tmp/work -u $(CONT_USER_NAME) $(CONT_IMAGE)
+else
+	PDFLATEX := podman run -it --rm -v $(PWD):/tmp/work $(CONT_IMAGE)
+endif
 
 OUTDIR ?= build
 OUTJOB ?= $(shell basename `pwd`)
@@ -25,10 +29,10 @@ clean:
 
 container: Dockerfile
 	docker build \
-		--build-arg USER_NAME=$(DOCKER_USER_NAME) \
-		--build-arg USER_ID=$(DOCKER_USER_ID) \
-		--build-arg GROUP_ID=$(DOCKER_GROUP_ID) \
-		-t $(DOCKER_IMAGE) .
+		--build-arg USER_NAME=$(CONT_USER_NAME) \
+		--build-arg USER_ID=$(CONT_USER_ID) \
+		--build-arg GROUP_ID=$(CONT_GROUP_ID) \
+		-t $(CONT_IMAGE) .
 
 $(OUTDIR):
 	mkdir -p $(OUTDIR)
