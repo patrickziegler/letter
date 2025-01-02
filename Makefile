@@ -8,9 +8,9 @@ CONT_USER_ID := $(shell id -u $(CONT_USER_NAME))
 CONT_GROUP_ID := $(shell id -g $(CONT_USER_NAME))
 
 ifeq "$(shell which podman)" ""
-	PDFLATEX := docker run -it --rm -v $(PWD):/tmp/work -u $(CONT_USER_NAME) $(CONT_IMAGE)
+	PDFLATEX := docker run -it --rm -v ${CURDIR}:/tmp/work -u $(CONT_USER_NAME) $(CONT_IMAGE)
 else
-	PDFLATEX := podman run -it --rm -v $(PWD):/tmp/work $(CONT_IMAGE)
+	PDFLATEX := podman run -it --rm -v ${CURDIR}:/tmp/work $(CONT_IMAGE)
 endif
 
 OUTDIR ?= build
